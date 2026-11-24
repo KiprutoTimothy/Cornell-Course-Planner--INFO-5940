@@ -50,7 +50,7 @@ D) Persona-Based: one section per persona
 
 E) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 2
 How many personas should `personas.md` define?
@@ -63,7 +63,7 @@ C) Option B plus an **academic advisor** persona as a secondary, non-user stakeh
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 3
 How detailed should each persona be?
@@ -74,7 +74,7 @@ B) Full: option A plus a sample profile (completed courses as real Cornell codes
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 4
 Should the persona sample profiles reuse the two MVP journey students exactly (Information Science junior targeting health data science; MPS Information Science student with an economics background targeting AI product management)?
@@ -87,7 +87,7 @@ C) No: write all personas fresh and keep the journey students only as story exam
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 5
 What size should stories be?
@@ -100,7 +100,7 @@ C) Large: about one story per FR group, broken down later in Construction. Expec
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 6
 What format should acceptance criteria use?
@@ -113,7 +113,7 @@ C) Given/When/Then for the main and error paths, plus a short checklist for disp
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C
 
 ## Question 7
 How should non-functional requirements (performance, security, accessibility, logging) appear in the stories?
@@ -128,7 +128,7 @@ D) Leave NFRs out of stories; they stay in `requirements.md` and are handled in 
 
 E) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C
 
 ## Question 8
 Should error and edge behavior be written as separate stories or as extra acceptance criteria on the main stories? Examples: vague career goal (FR-2.2), plan does not fit (FR-6.6), course not offered recently (FR-6.4), unknown course code (FR-1.2), model runtime unavailable (NFR-3.2), LLM retries exhausted (NFR-3.1).
@@ -141,7 +141,7 @@ C) Always separate stories
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 9
 Should stories carry a priority label?
@@ -154,7 +154,7 @@ C) No: priority is decided in Workflow Planning and Units Generation
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 10
 Should stories include a rough size estimate, to help split work in Units Generation?
@@ -167,7 +167,7 @@ C) No estimates at this stage
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C
 
 ## Question 11
 How should the LLM-specific behavior be stated in acceptance criteria, since model output varies from run to run? Examples: skill mapping, explanations, "why" answers.
@@ -178,7 +178,7 @@ B) Option A plus a reviewer-judged criterion where the metric is human-scored (f
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 12
 Who reviews the generated stories before the team approves them?
@@ -191,7 +191,7 @@ C) The whole team reviews together at the stage gate
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ---
 

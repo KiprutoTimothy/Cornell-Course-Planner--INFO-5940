@@ -199,31 +199,31 @@ D) Other (please describe after [Answer]: tag below)
 These steps run only after every answer above is filled in, any ambiguity is resolved, and the team approves this plan. Each box is marked [x] as soon as its step is done.
 
 ### Personas
-- [ ] 1. Draft personas at the agreed count and detail (Questions 2 to 4)
-- [ ] 2. For each student persona, list the planning rules that apply: level filter (FR-3.7), horizon (FR-6.1), comparison (FR-2.6), reachability ranking (FR-4.3)
-- [ ] 3. Check that every sample course code exists in the 8-subject core set (CQ1:D) and is labeled as a planning example, not a real student's record
-- [ ] 4. Write `aidlc-docs/inception/user-stories/personas.md`
+- [x] 1. Draft personas at the agreed count and detail (Questions 2 to 4)
+- [x] 2. For each student persona, list the planning rules that apply: level filter (FR-3.7), horizon (FR-6.1), comparison (FR-2.6), reachability ranking (FR-4.3)
+- [x] 3. Check that every sample course code exists in the 8-subject core set (CQ1:D) and is labeled as a planning example, not a real student's record (core-subject check done; confirming each code in the snapshot is deferred to Construction, after ingestion; noted in personas.md)
+- [x] 4. Write `aidlc-docs/inception/user-stories/personas.md`
 
 ### Stories
-- [ ] 5. Set up the story structure agreed in Question 1, with story IDs (for example US-2.3) and a "Traces to" line citing FR and NFR IDs
-- [ ] 6. Write stories for Student Profile Intake (FR-1)
-- [ ] 7. Write stories for Career and Skill Mapping, including comparison (FR-2)
-- [ ] 8. Write stories for Catalog Search and Recommendations (FR-3, FR-4)
-- [ ] 9. Write stories for Prerequisite Verification (FR-5)
-- [ ] 10. Write stories for Semester Planning (FR-6)
-- [ ] 11. Write stories for Conversational Revision (FR-7)
-- [ ] 12. Write stories for Plan Export (FR-8, Should Have) and Advisory Notice and Sources (FR-9)
-- [ ] 13. Write stories for the Evaluation Harness and catalog refresh (FR-10, FR-3.1), if a team persona is included (Question 2)
-- [ ] 14. Add NFR coverage as agreed in Question 7
-- [ ] 15. Add edge and error behavior as agreed in Question 8
-- [ ] 16. Add priority and size labels as agreed in Questions 9 and 10
-- [ ] 17. Write `aidlc-docs/inception/user-stories/stories.md`
+- [x] 5. Set up the story structure agreed in Question 1, with story IDs (for example US-2.3) and a "Traces to" line citing FR and NFR IDs
+- [x] 6. Write stories for Student Profile Intake (FR-1)
+- [x] 7. Write stories for Career and Skill Mapping, including comparison (FR-2)
+- [x] 8. Write stories for Catalog Search and Recommendations (FR-3, FR-4)
+- [x] 9. Write stories for Prerequisite Verification (FR-5)
+- [x] 10. Write stories for Semester Planning (FR-6)
+- [x] 11. Write stories for Conversational Revision (FR-7)
+- [x] 12. Write stories for Plan Export (FR-8, Should Have) and Advisory Notice and Sources (FR-9)
+- [x] 13. Write stories for the Evaluation Harness and catalog refresh (FR-10, FR-3.1), if a team persona is included (Question 2)
+- [x] 14. Add NFR coverage as agreed in Question 7
+- [x] 15. Add edge and error behavior as agreed in Question 8
+- [x] 16. Add priority and size labels as agreed in Questions 9 and 10
+- [x] 17. Write `aidlc-docs/inception/user-stories/stories.md`
 
 ### Verification
-- [ ] 18. Check every story against INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable)
-- [ ] 19. Check that every story has acceptance criteria in the agreed format (Questions 6 and 11)
-- [ ] 20. Build a persona-to-story map in `stories.md`
-- [ ] 21. Build a coverage table: every Must Have FR sub-requirement maps to at least one story; list any gaps
-- [ ] 22. Check that MVP Journeys 1 and 2 can be traced end to end through stories, step by step
-- [ ] 23. Validate Markdown tables and any diagrams per `common/content-validation.md`
-- [ ] 24. Run the extension compliance check (Security, Resiliency, PBT) for this stage and record it
+- [x] 18. Check every story against INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable)
+- [x] 19. Check that every story has acceptance criteria in the agreed format (Questions 6 and 11)
+- [x] 20. Build a persona-to-story map in `stories.md`
+- [x] 21. Build a coverage table: every Must Have FR sub-requirement maps to at least one story; list any gaps
+- [x] 22. Check that MVP Journeys 1 and 2 can be traced end to end through stories, step by step
+- [x] 23. Validate Markdown tables and any diagrams per `common/content-validation.md`
+- [x] 24. Run the extension compliance check (Security, Resiliency, PBT) for this stage and record it

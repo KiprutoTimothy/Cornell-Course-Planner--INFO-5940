@@ -70,3 +70,52 @@
 **Context**: INCEPTION - User Stories, Part 1 Steps 1 to 7 (awaiting answers)
 
 ---
+
+## User Stories - Plan Answers and Plan Approval Received
+**Timestamp**: 2026-11-24T23:13:17Z
+**User Input**: "Clarification answers for User Stories wer provided by Erick Muriungi (Member 5). Erick approves the stage"
+**AI Response**: "Read story-generation-plan.md. All 12 answered. Raw answers: Q1 A; Q2 B; Q3 B; Q4 B; Q5 B; Q6 C; Q7 C; Q8 A; Q9 A; Q10 C; Q11 B; Q12 B. Step 9 analysis: no vague, combined, or contradictory answers; no follow-up file needed. Interpretation: 'approves the stage' = approval of the story generation plan (Part 1, Step 13) by Member 5. Per Q12:B, the generated stories are reviewed by Members 5 and 3 and then approved by the whole team at the stage gate. Starting Part 2 Generation."
+**Context**: INCEPTION - User Stories, Part 1 Steps 8 to 14 complete (plan approved); Part 2 starting
+
+---
+
+## User Stories - Generation Complete and Approval Prompt
+**Timestamp**: 2026-11-24T23:16:09Z
+**User Input**: (none - generation step)
+**AI Response**: "Executed all 24 steps of story-generation-plan.md and marked them [x]. Generated aidlc-docs/inception/user-stories/personas.md (5 personas: P1 Maya career-focused undergraduate and P2 Daniel professional master's, both from the vision MVP journeys; P3 Priya exploring first-year and P4 Sam major switcher, new; P5 Team evaluator) and aidlc-docs/inception/user-stories/stories.md (29 medium stories across 11 epics; 28 Must Have, 1 Should Have (US-8.1); Given/When/Then plus display checklists; reviewer-judged criteria marked; persona-to-story map; Journey 1 and 2 traceability; FR/NFR coverage table with no Must Have gaps; INVEST check; extension compliance with no blocking findings). Caveat: sample course codes are checked only for being in core subjects; confirming them in the snapshot is deferred to Construction. Presented completion message: Request Changes, or Approve & Continue to Workflow Planning. Per Q12:B, review by Members 5 and 3, then team approval."
+**Context**: INCEPTION - User Stories, Part 2 Steps 15 to 20; awaiting explicit approval
+
+---
+
+## User Stories - Approval Received
+**Timestamp**: 2026-11-24T23:22:19Z
+**User Input**: "Approve & Continue"
+**AI Response**: "User stories and personas approved. Recorded as the team stage-gate approval required by Q12:B (review by Members 5 and 3 assumed done before this approval). Marked User Stories complete. Starting Workflow Planning: loaded inception/workflow-planning.md and common/content-validation.md, plus requirements.md, stories.md, and personas.md."
+**Context**: INCEPTION - User Stories APPROVED; transition to Workflow Planning
+
+---
+
+## Workflow Planning - Plan Created and Approval Prompt
+**Timestamp**: 2026-11-24T23:23:14Z
+**User Input**: (none - planning step)
+**AI Response**: "Created aidlc-docs/inception/plans/execution-plan.md. Impact: user-facing, structural, data model, API, and NFR all Yes. Risk High (local LLM speed and tool-calling unproven, free-text prerequisite parsing, 22 days to deadline); rollback Easy (git revert); testing Complex. Execute: Application Design, Units Generation, Functional Design (per unit with business logic), NFR Requirements, NFR Design, Code Generation, Build and Test. Skip: Reverse Engineering (greenfield), Infrastructure Design (local Docker, no cloud or deployment). Included Mermaid diagram (validated: alphanumeric node IDs, quoted labels) with text alternative, Units Generation guidance (early model timing check, snapshot first, deterministic core in parallel, export last), and timeline Nov 24 to Dec 16. Updated aidlc-state.md with execution plan summary. Prompt: Request Changes, Add Skipped Stages, or Approve & Continue to Application Design."
+**Context**: INCEPTION - Workflow Planning, awaiting explicit approval
+
+---
+
+## Workflow Planning - Approval
+**Timestamp**: 2026-11-24T23:39:01Z
+**AI Prompt**: "Ready to proceed with this plan? Options: Request Changes, Add Skipped Stages, or Approve & Continue to Application Design."
+**User Response**: "Approve the plan and continue to Application design. We're only completing the inception phase for now and we'll come back and review the construction phase later but the plan for that looks sound for now. Another addition to the plan should be that for the prerequisites, if a user is taking a class that has certain prerequisites, the user should be provided with that list of prerequisites to select the ones they've done and store that as part of their profile. this will help in the case where another class is encountered by the planner and has the same prerequisites. The planner is able to know that that prerequisite or corequisite is already checked off"
+**Status**: Approved, with a change request
+**Context**: Execution plan approved (9 stages run or completed, 2 skipped). Scope note: the team is completing Inception only for now; Construction stages stay in the plan as provisional and will be reviewed before Construction starts. Change request CR-1 (prerequisite checklist stored in the profile and reused across courses) recorded in execution-plan.md. It modifies approved FR-1, FR-5 and E1/E5 stories. Per common/workflow-changes.md it is handled as a modification of the existing artifacts, not a restart. Clarification questions are in application-design-plan.md (section A). requirements.md and stories.md are updated after the answers.
+
+---
+
+## Application Design - Plan and Questions Created
+**Timestamp**: 2026-11-24T23:39:48Z
+**User Input**: (none - continuing after Workflow Planning approval)
+**AI Response**: "Loaded inception/application-design.md. Created aidlc-docs/inception/plans/application-design-plan.md with Section A (8 questions settling CR-1: when the checklist is shown, which items appear, effect of checking a course code, effect of checking a non-course clause on 'Needs review', matching rule across courses, unchecked items, session-only storage, review and undo), Section B (12 design questions: overall structure, first-plan orchestration, tool granularity, where chat edits are applied, snapshot storage, what is committed, session state, UI update style, LLM gateway, evaluation harness access, skill mapping storage, component split for ownership), and a 13-step generation checklist covering the CR-1 updates, the 5 mandatory artifacts, RESILIENCY-01 criticality, story-to-component mapping, and validation. Awaiting answers."
+**Context**: INCEPTION - Application Design, Steps 1 to 6 (awaiting answers)
+
+---

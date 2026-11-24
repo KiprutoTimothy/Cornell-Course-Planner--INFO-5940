@@ -208,11 +208,11 @@ One command runs all automated metrics and writes a dated results report.
  
 | # | Name | NetID | Inception responsibilities |
 |---|---|---|---|
-| 1 | [Name] | [netid] | **GitHub setup and AI-DLC workflow:** create the repository and add members, install and configure AI-DLC v1.0.1, lead the shared workflow, maintain `audit.md` and `aidlc-state.md`, handle the final submission |
-| 2 | [Name] | [netid] | **README and product proposal:** problem statement, why an LLM agent fits, planned LLM integration and scope, team and collaboration plan |
-| 3 | [Name] | [netid] | **Vision and requirements:** target users and objectives, MVP and out-of-scope features, open questions, lead Requirements Analysis |
-| 4 | [Name] | [netid] | **Technical environment and application design:** Cornell data sources, tech stack and LLM, retrieval and recommendation design, agent tools, security requirements, testing framework, technical environment document and code examples |
-| 5 | [Name] | [netid] | **User stories, units of work, and QA:** user stories, units of work, evaluation profiles and test cases |
+| 1 | [Carey Manwa] | [com34] | **GitHub setup and AI-DLC workflow:** create the repository and add members, install and configure AI-DLC v1.0.1, lead the shared workflow, maintain `audit.md` and `aidlc-state.md`, handle the final submission |
+| 2 | [Addis Sahle] | [as3734] | **README and product proposal:** problem statement, why an LLM agent fits, planned LLM integration and scope, team and collaboration plan |
+| 3 | [Timothy Kipruto] | [tkk24] | **Vision and requirements:** target users and objectives, MVP and out-of-scope features, open questions, lead Requirements Analysis |
+| 4 | [Venkata Sai Revanth Damisetty] | [vd259] | **Technical environment and application design:** Cornell data sources, tech stack and LLM, retrieval and recommendation design, agent tools, security requirements, testing framework, technical environment document and code examples |
+| 5 | [Erick Muriungi] | [ekm82] | **User stories, units of work, and QA:** user stories, units of work, evaluation profiles and test cases |
  
 Construction work will be split during the AI-DLC **Units Generation** stage, and each member will own one or more units.
  

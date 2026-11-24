@@ -192,12 +192,12 @@ Show that an agent can take a free-text career goal and a list of completed cour
 
 | ID | Feature | Description | Priority | Rationale for Inclusion |
 |----|---------|-------------|----------|-------------------------|
-| F1 | Student profile intake | Form and chat input for program, year, semesters remaining, credit range per semester (default 12 to 18), completed courses (typed or pasted as a list of course codes), interests, and topics to avoid. Stored for the session only. | Must Have | Every other feature depends on knowing the student |
+| F1 | Student profile intake | Form and chat input for program, year, semesters remaining, credit range per semester (default 12 to 18), completed and in-progress courses (typed or pasted as a list of course codes), fixed courses the student already plans to take, interests, topics to avoid, and career courses per semester (default 2). Stored for the session only. | Must Have | Every other feature depends on knowing the student |
 | F2 | Career-based skill mapping | Converts a free-text career goal into 6 to 12 named skills, each with a one-line reason. The student can add, remove, or reword skills before recommendations run. Marks skills already covered by completed courses. | Must Have | This is the link between careers and courses that no existing tool provides |
 | F3 | Catalog search | Searches the loaded Cornell course data by skill, topic, or keyword, using course titles, descriptions, and learning outcomes. Returns only courses that exist in the loaded data. | Must Have | Grounds every recommendation in real courses |
 | F4 | Personalized course recommendations | Ranked list of courses for the mapped skills. Each entry shows course code, title, credits, skills it covers, a 1 to 2 sentence reason, prerequisite status, and a link to the Class Roster page. Excludes completed courses and forbidden overlaps with completed courses. | Must Have | The main output students came for |
 | F5 | Prerequisite verification | Interprets the free-text prerequisite and corequisite text for a course, compares it with the student's completed and planned courses, and returns one of: Met, Not met (with the missing courses), or Needs review (permission of instructor, "or equivalent", recommended-only). Always shows the original text. | Must Have | Prevents the most costly planning mistake |
-| F6 | Semester planning | Places recommended courses into the student's remaining semesters so that each course follows its prerequisites, each semester stays in the credit range, and courses are placed in terms they are typically offered (from "when offered" and "last terms offered" data). Flags any course whose offering term is uncertain. | Must Have | Turns a list into an actionable plan |
+| F6 | Semester planning | Places the student's fixed courses first, then fills remaining credits with recommended courses so that each course follows its prerequisites, each semester stays in the credit range, and courses are placed in terms they are typically offered (from "when offered" and "last terms offered" data). Flags any course whose offering term is uncertain. | Must Have | Turns a list into an actionable plan |
 | F7 | Conversational revision | The student can ask follow-up questions and request changes ("swap INFO 3300 for something with less design", "I'm studying abroad in spring"). The agent updates the plan and re-checks prerequisites and credits. | Must Have | Plans are never right on the first pass; this is where the agent loop earns its place |
 | F8 | Plan export | Download the current plan, skills, and explanations as a Markdown file. | Should Have | Students need something to bring to their advisor |
 | F9 | Advisory notice and sources | Every plan states that it is advisory and must be confirmed with an advisor, and links each course to its official listing. | Must Have | Protects students from over-trusting the output |
@@ -254,7 +254,7 @@ Show that an agent can take a free-text career goal and a list of completed cour
 - **Assumption**: The chosen LLM can follow tool-calling instructions and produce structured output reliably enough for plan generation. **Risk if wrong**: Move more logic into deterministic code and use the LLM only for mapping and explanations.
 - **Assumption**: Past offering patterns ("when offered", last terms offered) predict future offerings well enough for planning. **Risk if wrong**: Plans may place a course in a term it is not taught; mitigated by flagging uncertain terms.
 - **Assumption**: Students can list completed courses as Cornell course codes. **Risk if wrong**: Master's students with outside degrees need help mapping; handled in conversation for the MVP.
-- **Accepted Limitation**: The MVP covers a defined subset of subjects (see Open Questions) and the current plus next three semesters.
+- **Accepted Limitation**: The MVP covers 8 subjects (CS, INFO, ORIE, STSCI, MATH, ECE, BTRY, ECON) and up to 4 future semesters starting Spring 2027.
 - **Accepted Limitation**: Recommendations are advisory and do not check major requirements.
 - **Accepted Limitation**: One student per session, no persistence after the app is closed (except the exported file).
 
@@ -289,22 +289,47 @@ Show that an agent can take a free-text career goal and a list of completed cour
 - Cornell Courses of Study: Cornell University, public, used for reference only in the MVP
 - LLM provider and model: see the technical environment document
 
-### Open Questions
+### Open Questions and Proposed Answers
 
-These are known uncertainties for Requirements Analysis. Each lists the options the team has discussed so far.
+These are the known uncertainties for Requirements Analysis. Each has the team's proposed answer for the prototype. Requirements Analysis should confirm or challenge each one; any answer can change during Construction if testing shows a better option.
 
-- [ ] **Subject coverage.** Which subjects does the MVP load? Options: (a) CS, INFO, ORIE, STSCI, MATH, ECE, BTRY, ECON; (b) all subjects in the Computing and Information Science and Engineering colleges; (c) all 170+ subjects. Coverage drives data size, search quality, and evaluation effort.
-- [ ] **Semesters covered.** Plan from Spring 2027 only, or also allow the student to plan the remainder of Fall 2026 when they are mid-semester? How many future semesters at most: 4 for undergraduates and 3 for master's students, or a single limit?
-- [ ] **Undergraduate versus graduate courses.** Should undergraduates see 5000 and 6000-level courses, and should master's students see 1000 and 2000-level prerequisite courses? Should the student's career level (undergraduate or graduate) filter results by default?
-- [ ] **Prerequisite interpretation timing.** Interpret prerequisite text once when data is loaded and store the result, or interpret it each time a course is checked? Stored results can be reviewed by the team; live interpretation adapts to the student's situation.
-- [ ] **Ambiguous prerequisite rules.** How should "or equivalent", "permission of instructor", "recommended", and background-specific rules (programmers versus designers) be classified: always "Needs review", or "Met" when the student has a close match?
-- [ ] **Corequisites and in-progress courses.** Do in-progress Fall 2026 courses count as completed for Spring 2027 planning?
-- [ ] **Career goal input.** Free text only, or free text plus a pick list of supported careers (for example software engineer, data scientist, ML engineer, product manager, UX designer or researcher, quantitative analyst)? Should the MVP support any career, or only careers the team has reviewed mappings for?
-- [ ] **Source of skill mappings.** LLM-generated each time, a team-curated mapping for the supported careers, or LLM-generated and cached after team review?
-- [ ] **Ranking factors.** Beyond skill coverage, what affects ranking: course level, number of skills covered, number of other planned courses it unlocks, student interests, credits?
-- [ ] **Number of recommendations.** How many courses per plan by default, and should the student set a target number of career-related courses per semester alongside required courses they already must take?
-- [ ] **Required courses the student already has to take.** Should the student be able to enter fixed courses (major requirements they know they need) so the planner fills only the remaining credits?
-- [ ] **Offering-term uncertainty.** If a course has no "when offered" data and no recent offering history, should it be excluded, included with a warning, or included only when the student asks?
-- [ ] **Session memory.** Is session-only memory enough for the MVP, or should a profile be saved to a local file so a student can return?
-- [ ] **Evaluation data.** Who builds the 10 evaluation profiles and 40 labeled prerequisite cases, and do the labels need two reviewers?
-- [ ] **Explanation length and tone.** One sentence per course, or a short paragraph? Should the agent show which tools it called so students can see how it reached the plan?
+1. **Subject coverage.** Which subjects does the MVP load?
+   - **Proposed answer**: CS, INFO, ORIE, STSCI, MATH, ECE, BTRY, and ECON. These cover the six supported careers (question 7) and keep the dataset small enough to load, search, and evaluate in the time available. The subject list is a configuration value so more subjects can be added without code changes.
+2. **Semesters covered.** Which terms can a plan include, and how many?
+   - **Proposed answer**: Plans start at Spring 2027 (the next roster) and cover up to 4 future semesters for every student. Master's students set a smaller number of remaining semesters in their profile. Fall 2026 is treated as in progress (question 6).
+3. **Undergraduate versus graduate courses.** Which course levels does each student see?
+   - **Proposed answer**: Undergraduates see 1000 to 5000-level courses, with 5000-level courses marked "graduate level, check enrollment rules". Master's students see 3000-level and above. Any lower-level course can still appear when it is a prerequisite that unlocks a recommended course.
+4. **Prerequisite interpretation timing.** Interpret prerequisite text once at data load, or every time a course is checked?
+   - **Proposed answer**: Once, at data load. The LLM converts each course's prerequisite text into a structured rule stored next to the original text. Checking a student against a stored rule is deterministic code. This makes rules reviewable by the team, makes checks fast and repeatable, and makes them testable against the labeled cases.
+5. **Ambiguous prerequisite rules.** How are unclear rules classified?
+   - **Proposed answer**:
+     - "Permission of instructor", alone or as an alternative the student needs: Needs review.
+     - "Or equivalent": Met if the student completed the named course, otherwise Needs review.
+     - "Recommended" prerequisites: do not block. Verdict is based on required prerequisites only, with the recommendation shown as a note.
+     - Background-specific rules (for example programmers versus designers): Needs review, with each path shown.
+     - Text where the grouping of "and" and "or" is unclear: Needs review.
+6. **Corequisites and in-progress courses.** Do in-progress courses count?
+   - **Proposed answer**: Yes. In-progress Fall 2026 courses count as completed for any later term, and the plan notes "assumes you pass". A corequisite is met if it is completed, in progress, or placed in the same semester of the plan.
+7. **Career goal input.** Free text, a pick list, or both?
+   - **Proposed answer**: Both. The student can type any goal, and the form suggests six supported careers: software engineer, data scientist, ML engineer, product manager, UX designer or researcher, and quantitative analyst. Goals outside those six are accepted and marked "skill mapping not reviewed by the team".
+8. **Source of skill mappings.** Where do career-to-skill mappings come from?
+   - **Proposed answer**: The LLM generates the mapping. Mappings for the six supported careers are generated once, reviewed and edited by the team, and stored in the repository. Other careers are generated live for the session. The student can edit any mapping (F2).
+9. **Ranking factors.** What decides the order of recommendations?
+   - **Proposed answer**, in order of weight:
+     1. Number of uncovered mapped skills the course teaches
+     2. Eligibility: Met first, then reachable within the plan, then Needs review
+     3. Number of other recommended courses it unlocks
+     4. Match with the student's stated interests
+     - Courses matching a topic the student wants to avoid drop to the bottom. Credits do not affect ranking; they are handled by the planner.
+10. **Number of recommendations.** How many courses does a plan include?
+    - **Proposed answer**: The recommendation list shows the top 10. The plan places 2 career courses per semester by default, adjustable from 1 to 4 by the student.
+11. **Required courses the student already has to take.** Can the student enter fixed courses?
+    - **Proposed answer**: Yes. The student can list fixed courses (for example known major requirements) and optionally pin each to a semester. The planner counts their credits first and fills only the remaining credits with career courses. Fixed courses are not checked against major requirements.
+12. **Offering-term uncertainty.** What happens to courses with unclear offering patterns?
+    - **Proposed answer**: A course offered in at least one of the last 4 terms but with no clear fall or spring pattern is included with a warning. A course not offered in the last 4 terms is excluded, since it is likely no longer taught.
+13. **Session memory.** Session-only, or saved to disk?
+    - **Proposed answer**: Session-only for the MVP. The Markdown export (F8) is the way to keep a plan. Saved profiles move to Phase 2.
+14. **Evaluation data.** Who builds the evaluation set, and how is it labeled?
+    - **Proposed answer**: The QA and user stories owner builds the 10 evaluation profiles from the personas. The vision and requirements owner labels the 40 prerequisite cases, and a second team member checks every label. Cases where the two disagree are labeled Needs review.
+15. **Explanation length and tone.** How much does the agent explain?
+    - **Proposed answer**: 1 to 2 plain sentences per course that name the skills it covers. Each plan has a collapsible "How this plan was built" section listing the tool calls the agent made, so students and graders can see the agent's steps.

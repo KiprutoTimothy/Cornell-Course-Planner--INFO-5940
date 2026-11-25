@@ -3,7 +3,7 @@
 **Stage**: INCEPTION - Requirements Analysis (Comprehensive depth)
 **Sources**: `docs/vision.md`, `requirement-verification-questions.md` (Q1 to Q43), `requirement-clarification-questions.md` (CQ1 to CQ16)
 **Date**: 2026-11-24
-**Status**: Draft for team approval
+**Status**: Approved 2026-11-24. Amended 2026-11-24 by change request CR-1 and by the technical environment alignment (C3:A); see section 12.
 
 ---
 
@@ -29,7 +29,7 @@ This table is the traceability index. Requirement IDs in later sections cite the
 
 | Topic | Decision | Source |
 |---|---|---|
-| Primary LLM | Free local model through Ollama or LM Studio, running natively on each laptop (GPU or Apple Silicon where available) | Q1:B, CQ3:A |
+| Primary LLM | Free local model through Ollama, running natively on each laptop (GPU or Apple Silicon where available). Model names are in `docs/technical-environment.md`. | Q1:B, CQ3:A, C3:A |
 | Fallback LLM | A smaller local model in the same runtime by default. A hosted model is used only if a course-provided key is present in `.env`. | CQ4:D |
 | Model selection on failure | No automatic switch on errors. Retry, then show a clear error. Primary or fallback model is chosen by configuration. | Q33:A, CQ4:D |
 | Backend | Python with LangChain or LangGraph | Q2:B |
@@ -98,13 +98,22 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
 
 ### FR-1 Student Profile Intake (F1, M)
 - **FR-1.1** The student enters program, college, year (undergraduate or master's), expected graduation term, and credit range per semester (default 12 to 18), through a form or chat.
-- **FR-1.2** The student enters completed and in-progress courses as Cornell course codes, typed or pasted as a list. The app normalizes the codes (case, spacing) and warns about codes not found in the loaded catalog.
+- **FR-1.2** The student enters completed and in-progress courses as Cornell course codes, typed or pasted as a list. The app normalizes the codes (case, spacing) and warns about codes not found in the loaded catalog. A typed code not found in the loaded catalog does not satisfy prerequisites. Codes checked off in a prerequisite checklist follow FR-1.9 instead (C2:A).
 - **FR-1.3** In-progress Fall 2026 courses count as completed for planning Spring 2027 onward (Q12:A).
 - **FR-1.4** The student can enter fixed courses and pin each to a planned term; they count toward that term's credit total (Q13:A).
 - **FR-1.5** The student can enter interests and topics to avoid.
 - **FR-1.6** The student can mark one or more planned terms as unavailable (for example study abroad).
-- **FR-1.7** The profile lives in memory for the session only. Nothing about the student is written to disk (CQ7:D).
+- **FR-1.7** The profile lives in memory for the session only, with a 60-minute idle timeout. Nothing about the student is written to disk (CQ7:D, B7:A).
 - **FR-1.8** The app never asks for name, NetID, email, or any login.
+- **FR-1.9** *(CR-1)* **Prerequisite checklist.** The app offers a course's prerequisite and corequisite items as a checklist, so the student can confirm what they have already done.
+  - **FR-1.9.1** The checklist is offered for each course the student enters as in-progress or fixed, and, after the first plan is shown, for each recommended or planned course whose verdict is not Met (A1:B, C1:A).
+  - **FR-1.9.2** Items are every course code in the rule, plus every non-course clause ("or equivalent", permission of instructor, "a course in linear algebra", background statements) as a separate item (A2:B).
+  - **FR-1.9.3** A checked course code is added to the student's completed courses and satisfies that code wherever it appears in any course's prerequisites (A3:A, A5:B). This holds even when the code is outside the loaded catalog; such a code is shown with a "not in loaded catalog" note (C2:A).
+  - **FR-1.9.4** A checked non-course clause is stored for that course only. The same clause text in another course is not treated as confirmed (A5:B).
+  - **FR-1.9.5** Unchecked items count as not done, and verdicts follow the normal rules (A6:A).
+  - **FR-1.9.6** Confirmations are part of the session profile only, and they appear in the Markdown export if it is built (A7:A, FR-1.7).
+  - **FR-1.9.7** The profile shows a "Prerequisites I've confirmed" list where any item can be removed (A8:A).
+  - **FR-1.9.8** Confirming or removing an item re-checks verdicts and placements incrementally (FR-7.4). It does not rebuild the plan, and it is not counted in the first-plan time (C1:A, NFR-1.1).
 
 ### FR-2 Career and Skill Mapping (F2, M)
 - **FR-2.1** The student enters a career goal as free text or picks it from the reviewed-career list (Q15:B, CQ13:B).
@@ -139,12 +148,13 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
   - **Met**
   - **Not met**, listing the missing courses
   - **Needs review**, with the reason
-- **FR-5.5** "Or equivalent", permission of instructor, "recommended", and background-specific clauses always produce **Needs review** (Q23:A).
+- **FR-5.5** "Or equivalent", permission of instructor, "recommended", and background-specific clauses produce **Needs review** (Q23:A), unless the student has confirmed that clause for that course in the checklist (FR-1.9.4, FR-5.11).
 - **FR-5.6** Ambiguous "and/or" grouping uses this documented default reading: commas and semicolons separate ANDed groups, and within a group "and" binds tighter than "or". The verdict notes that an assumption was used (Q24:B).
-- **FR-5.7** A verdict from an **unverified** rule is shown as **Needs review (unverified parse)**. *(Assumption: CQ2 says unverified rules are labeled in the app; this keeps the vision's three verdict types. Confirm at review.)*
+- **FR-5.7** A verdict from an **unverified** rule is shown as **Needs review (unverified parse)** (confirmed at Requirements approval). Its checklist lists the course codes found in the original text. Checking them adds them to completed courses (FR-1.9.3), but the verdict stays **Needs review (unverified parse)**, because the rule's logic is not trusted.
 - **FR-5.8** Every verdict shows the original prerequisite text.
 - **FR-5.9** The app can show the full prerequisite chain for any target course.
 - **FR-5.10** Forbidden overlaps are detected against completed courses and among courses inside the same plan (Q25:B).
+- **FR-5.11** *(CR-1)* The evaluator receives the student's confirmed clauses for the course being checked. A confirmed clause counts as satisfied. A **Met** verdict that depends on at least one confirmed clause is shown as **Met (student-confirmed)** (A4:A). The verdict status stays one of the three types (Met, Not met, Needs review); "student-confirmed" is a marker on Met.
 
 ### FR-6 Semester Planning (F6, M)
 - **FR-6.1** Plans cover Spring 2027 through at most Fall 2028 (4 semesters), limited by the student's expected graduation term and unavailable terms (CQ5:A, Q11:B, FR-1.6).
@@ -169,7 +179,7 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
 - **FR-7.6** At least 3 revisions in one session keep earlier student choices (vision MVP criterion).
 
 ### FR-8 Plan Export (F8, S)
-- **FR-8.1** The student can download the current plan, skills, explanations, prerequisite verdicts, and the advisory notice as a Markdown file (Q31:B, built if time allows).
+- **FR-8.1** The student can download the current plan, skills, explanations, prerequisite verdicts, and the advisory notice, and the student's confirmed prerequisites (FR-1.9.6) as a Markdown file (Q31:B, built if time allows).
 
 ### FR-9 Advisory Notice and Sources (F9, M)
 - **FR-9.1** Every plan view and every export states that the plan is advisory, does not check graduation requirements, and must be confirmed with an advisor.
@@ -192,7 +202,7 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
 
 ### NFR-1 Performance
 - **NFR-1.1** Time to a first plan is under 90 seconds on the median evaluation profile, on the team's fastest laptop, using the primary model (Q32:B).
-- **NFR-1.2** Every LLM and HTTP call has an explicit timeout (RESILIENCY-10).
+- **NFR-1.2** Every LLM and HTTP call has an explicit timeout: 60 seconds per LLM call and 10 seconds per Class Roster request (RESILIENCY-10, C3:A).
 
 ### NFR-2 Accuracy and Grounding
 - **NFR-2.1** 0 fabricated courses across the 10 evaluation profiles.
@@ -203,7 +213,7 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
 - **NFR-2.6** Perceived usefulness averages at least 4 out of 5 from at least 5 student testers outside the team.
 
 ### NFR-3 Reliability and Error Handling
-- **NFR-3.1** LLM calls are retried a fixed number of times. After that the app shows a clear, generic error message and keeps the student's inputs and current plan (Q33:A, SECURITY-15).
+- **NFR-3.1** LLM calls are retried a fixed 3 attempts (C3:A). After that the app shows a clear, generic error message and keeps the student's inputs and current plan (Q33:A, SECURITY-15).
 - **NFR-3.2** If the model runtime is unreachable, the app says so at startup and in the UI, and shows how to fix it (RESILIENCY-06, shallow and deep checks).
 - **NFR-3.3** A global error handler catches unhandled exceptions, logs them, and returns a safe response with no stack trace (SECURITY-09, SECURITY-15).
 - **NFR-3.4** The app reads only the local snapshot at runtime. It does not depend on the Class Roster API being up (vision risk: API changes).
@@ -211,20 +221,20 @@ Priority: **M** = Must Have, **S** = Should Have. Every functional requirement t
 ### NFR-4 Security (Security Baseline enabled)
 - **NFR-4.1** Secrets live only in `.env`, created from a committed `.env.example`. No keys in code or in the repository (Q34:A, SECURITY-12).
 - **NFR-4.2** No student data is persisted. Logs hold tool names, timing, and errors only, with a timestamp, request ID, level, and message. Logs contain no profile content, no secrets, and no tokens (CQ6:C, SECURITY-03).
-- **NFR-4.3** All form, chat, and API inputs are validated with a schema that enforces type, maximum length, and allowlisted formats (for example the course-code pattern). Payload size limits are set. User text is escaped before rendering (SECURITY-05).
+- **NFR-4.3** All form, chat, and API inputs are validated with a schema that enforces type, maximum length, and allowlisted formats (for example the course-code pattern). Payload size limits are set (request body at most 64 KB; per-field limits in `docs/technical-environment.md`, Input Validation). User text is escaped before rendering (SECURITY-05, C3:A).
 - **NFR-4.4** HTML responses set Content-Security-Policy (`default-src 'self'`, no `unsafe-inline` without a documented reason), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and `Referrer-Policy: strict-origin-when-cross-origin` (SECURITY-04).
 - **NFR-4.5** The server binds to `127.0.0.1` only. CORS allows only the app's own origin (SECURITY-07, SECURITY-08).
-- **NFR-4.6** Dependencies are pinned in a lock file. Docker base images use pinned tags, not `latest`. A dependency vulnerability scan (for example `pip-audit`) is documented in the build instructions (SECURITY-10).
+- **NFR-4.6** Dependencies are pinned in a lock file. Docker base images use pinned tags, not `latest`. `pip-audit` runs in GitHub Actions CI on every push, and Dependabot alerts are enabled (SECURITY-10, C3:A).
 - **NFR-4.7** Text returned by the LLM and data loaded from the snapshot are parsed with schema validation, never with unsafe deserialization. Front-end assets are served locally, or with SRI hashes if loaded from a CDN (SECURITY-13).
 - **NFR-4.8** Prompt-injection misuse case: text in course descriptions or student chat must not be able to make the agent name non-catalog courses or skip validation. The FR-4.5 code check and the FR-6.7 validator are the layered controls (SECURITY-11).
-- **NFR-4.9** Chat requests are rate-limited per session, so a runaway loop cannot overload the local model (SECURITY-11).
+- **NFR-4.9** Chat requests are rate-limited to 10 per minute per session (C3:A), so a runaway loop cannot overload the local model (SECURITY-11).
 
 ### NFR-5 Usability and Accessibility
 - **NFR-5.1** Custom UI elements meet WCAG 2.1 AA: contrast, labels, focus order, and full keyboard operation (Q35:B).
 - **NFR-5.2** Verdicts and warnings are shown in text, not by color alone.
 
 ### NFR-6 Portability and Setup
-- **NFR-6.1** The app runs in Docker on Windows, macOS, and Linux laptops without a GPU. The model runtime runs natively on the host and the app reaches it over localhost (Q6:C, CQ3:A).
+- **NFR-6.1** The app runs in Docker on the team's macOS (Apple Silicon) and Windows 10/11 laptops, including laptops without a GPU (C3:A). The model runtime runs natively on the host and the app reaches it over localhost (Q6:C, CQ3:A).
 - **NFR-6.2** The full flow runs on all 5 team laptops by following the README.
 - **NFR-6.3** Primary model, fallback model, and the optional hosted key are set by configuration with no code change (CQ4:D).
 
@@ -298,7 +308,7 @@ Same as the vision's out-of-scope table, with these changes from the answers:
 | SECURITY-10 Supply chain | Compliant | NFR-4.6. SBOM applies to production deployments only, so N/A. |
 | SECURITY-11 Secure design | Compliant | NFR-4.8 misuse case; NFR-4.9 rate limiting |
 | SECURITY-12 Authentication and credentials | Compliant (scoped) | No authentication in the MVP. No hardcoded secrets (NFR-4.1). |
-| SECURITY-13 Integrity | Compliant | NFR-4.7. No CI pipeline. |
+| SECURITY-13 Integrity | Compliant | NFR-4.7. GitHub Actions CI installs from the committed lock file (`uv sync --frozen`); HTMX is vendored with a recorded checksum (C3:A). |
 | SECURITY-14 Alerting and monitoring | N/A | No deployed service or authentication events. Local log only. |
 | SECURITY-15 Exception handling | Compliant | NFR-3.1, NFR-3.3 |
 
@@ -331,3 +341,10 @@ These are not made automatically; the vision owner (team role 3) decides.
 - Risk table: name the fallback model (CQ4:D).
 - Open Questions: mark all 15 as resolved, pointing to this document.
 - Add the technical environment document the vision refers to (team role 4). Section 2 above has its content.
+
+## 12. Change Log
+
+| Date | Change | Source | Requirements affected |
+|---|---|---|---|
+| 2026-11-24 | **CR-1: prerequisite checklist stored in the profile.** Students confirm a course's prerequisite items; confirmed course codes carry over to every course, confirmed clauses stay with that course. | Workflow Planning approval message; `application-design-plan.md` A1 to A8, C1, C2 | FR-1.2, new FR-1.9, FR-5.5, FR-5.7, new FR-5.11, FR-8.1 |
+| 2026-11-24 | **Technical environment alignment.** `docs/technical-environment.md` is binding where it differs: Ollama only; macOS and Windows machines only; GitHub Actions CI with `pip-audit` and Dependabot; 3 retries; 60 s LLM and 10 s roster timeouts; 10 chat requests per minute; 60-minute session idle timeout; input limits. | `application-design-plan.md` C3:A | Section 2 (Primary LLM), FR-1.7, NFR-1.2, NFR-3.1, NFR-4.3, NFR-4.6, NFR-4.9, NFR-6.1, section 10 (SECURITY-13) |

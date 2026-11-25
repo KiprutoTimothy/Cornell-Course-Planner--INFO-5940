@@ -127,3 +127,35 @@
 **Context**: INCEPTION - Application Design, Steps 7 to 9 (follow-up questions)
 
 ---
+
+## Application Design - Follow-up Answers and Plan Approval
+**Timestamp**: 2026-11-25T00:27:25Z
+**User Input**: "follow-up questions done and approved by Revanth"
+**AI Response**: "Read Section C. Raw answers: C1 A (plan first; checklists on courses with unmet verdicts after the first plan; incremental re-check; 90-second timing unaffected); C2 A (a checked-off code from a course's own prerequisite text counts everywhere even if outside the loaded catalog, shown with a 'not in loaded catalog' note; FR-1.2 unchanged for typed codes); C3 A (technical-environment.md wins; requirements.md updated with a change note). No remaining ambiguity. The 4 design decisions taken without a question were not objected to. Plan approved by Revanth (Member 4). Starting generation."
+**Context**: INCEPTION - Application Design, plan approved; Step 10 generation starting
+
+---
+
+## Application Design - Generation Complete and Approval Prompt
+**Timestamp**: 2026-11-25T03:49:33Z
+**User Input**: (none - generation step)
+**AI Response**: "Executed all 13 steps of application-design-plan.md and marked them [x]. CR-1 applied: requirements.md gets FR-1.9 (8 sub-requirements), FR-5.11, amended FR-1.2, FR-5.5, FR-5.7, FR-8.1; C3:A alignment applied (Ollama only, macOS and Windows, GitHub Actions CI, 3 retries, 60 s and 10 s timeouts, 10 chat requests per minute, 60-minute idle timeout, input limits); change log added as section 12. stories.md gets US-1.4 (30 stories) and new criteria in US-5.1, US-5.2, US-8.1, plus persona map and coverage updates. Generated aidlc-docs/inception/application-design/: components.md (34 components in 7 modules, RESILIENCY-01 criticality table), component-methods.md (signatures; Evaluator interface extended for CR-1), services.md (6 runtime and 2 script services; 5 flows with Mermaid and text alternatives), component-dependency.md (import rules, module graph, dependency matrix, data flow), application-design.md (consolidated; story-to-component map 30/30; validation; extension compliance with no blocking findings; open items: update technical-environment.md Example 2 and PBT list for CR-1, import-boundary test, final routes). Presented completion message: Request Changes, or Approve & Continue to Units Generation."
+**Context**: INCEPTION - Application Design, Steps 10 to 12; awaiting explicit approval
+
+---
+
+## Application Design - Approval Received
+**Timestamp**: 2026-11-25T03:52:01Z
+**User Input**: "Approve & Continue"
+**AI Response**: "Application design approved, including the CR-1 changes to requirements.md and stories.md. Marked Application Design complete. Starting Units Generation Part 1 (Planning): loaded inception/units-generation.md."
+**Context**: INCEPTION - Application Design APPROVED; transition to Units Generation
+
+---
+
+## Units Generation - Plan and Questions Created
+**Timestamp**: 2026-11-25T03:52:37Z
+**User Input**: (none - continuing after Application Design approval)
+**AI Response**: "Created aidlc-docs/inception/plans/unit-of-work-plan.md with a starting proposal (5 units by layer: U1 Catalog Data, U2 Prerequisite Engine, U3 Planner, U4 Agent and Services, U5 Web and Evaluation), 11 questions (split, Ingestion Parser ownership, owner per unit, model-speed spike, shared contracts step, Construction sequencing, system-wide vs per-unit NFR stages, faking services for the web unit, fixture catalog, code organization, placement of US-8.1), and an 11-step generation checklist with the 3 mandatory artifacts and validation. Awaiting answers."
+**Context**: INCEPTION - Units Generation, Part 1 Steps 1 to 5 (awaiting answers)
+
+---

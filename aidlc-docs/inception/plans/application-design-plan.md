@@ -332,20 +332,20 @@ These follow directly from the answers and the technical environment document. T
 These steps run only after every answer is in, ambiguities are resolved, and the team approves. Each box is marked [x] as soon as its step is done.
 
 ### Change request CR-1
-- [ ] 1. Add FR-1.9 and FR-5.11 to `requirements.md` (and adjust FR-5.5 and FR-5.7 if Question A4 needs it), with a change note citing CR-1. Apply the C3 decision to `requirements.md` or record it for the technical environment owner.
-- [ ] 2. Add story US-1.4 to `stories.md`, add criteria to US-5.1 and US-5.2, and update the persona map and coverage table
+- [x] 1. Add FR-1.9 and FR-5.11 to `requirements.md` (and adjust FR-5.5 and FR-5.7 if Question A4 needs it), with a change note citing CR-1. Apply the C3 decision to `requirements.md` or record it for the technical environment owner.
+- [x] 2. Add story US-1.4 to `stories.md`, add criteria to US-5.1 and US-5.2, and update the persona map and coverage table
 
 ### Design artifacts
-- [ ] 3. Identify components and their responsibilities, including the CR-1 checklist in the profile; write `components.md`
-- [ ] 4. Define method signatures with inputs and outputs for each component (no detailed business rules); write `component-methods.md`
-- [ ] 5. Define the service layer and its orchestration: first-plan flow, chat revision flow, checklist flow, ingestion flow, evaluation flow; write `services.md`
-- [ ] 6. Define the dependency matrix, communication patterns, and data flow diagrams; write `component-dependency.md`
-- [ ] 7. Classify each component's criticality and the impact of its being unavailable (RESILIENCY-01)
-- [ ] 8. Map every story (US-1.1 to US-11.4, plus US-1.4) to at least one component
-- [ ] 9. Write `application-design.md`, which consolidates steps 3 to 8
+- [x] 3. Identify components and their responsibilities, including the CR-1 checklist in the profile; write `components.md`
+- [x] 4. Define method signatures with inputs and outputs for each component (no detailed business rules); write `component-methods.md`
+- [x] 5. Define the service layer and its orchestration: first-plan flow, chat revision flow, checklist flow, ingestion flow, evaluation flow; write `services.md`
+- [x] 6. Define the dependency matrix, communication patterns, and data flow diagrams; write `component-dependency.md`
+- [x] 7. Classify each component's criticality and the impact of its being unavailable (RESILIENCY-01)
+- [x] 8. Map every story (US-1.1 to US-11.4, plus US-1.4) to at least one component
+- [x] 9. Write `application-design.md`, which consolidates steps 3 to 8
 
 ### Validation
-- [ ] 10. Check that deterministic components are separate from LLM components (NFR-7.1)
-- [ ] 11. Check that the validator and the course-code check cannot be bypassed by any path (FR-6.7, FR-4.5, NFR-4.8)
-- [ ] 12. Validate Mermaid diagrams, with text alternatives (`common/content-validation.md`)
-- [ ] 13. Run the extension compliance check (Security, Resiliency, PBT) for this stage
+- [x] 10. Check that deterministic components are separate from LLM components (NFR-7.1)
+- [x] 11. Check that the validator and the course-code check cannot be bypassed by any path (FR-6.7, FR-4.5, NFR-4.8)
+- [x] 12. Validate Mermaid diagrams, with text alternatives (`common/content-validation.md`)
+- [x] 13. Run the extension compliance check (Security, Resiliency, PBT) for this stage

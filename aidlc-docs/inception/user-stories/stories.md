@@ -2,14 +2,14 @@
 
 **Stage**: INCEPTION - User Stories
 **Sources**: `requirements.md` (approved), `personas.md`, `docs/vision.md` MVP Journeys, `story-generation-plan.md` answers
-**Status**: Draft for review by Member 5 and Member 3, then team approval (Q12:B)
+**Status**: Approved 2026-11-24. Amended 2026-11-24 by change request CR-1 (new US-1.4; criteria added to US-5.1, US-5.2, US-8.1).
 
 ## Conventions
 
 | Item | Rule | Source |
 |---|---|---|
 | Organization | One epic per feature area (E1 to E9 = vision F1 to F9), plus E10 Evaluation and Data, plus E11 Cross-Cutting Quality | Q1:A, Q7:C |
-| Story size | Medium: one student or team task per story (29 stories) | Q5:B |
+| Story size | Medium: one student or team task per story (30 stories, including US-1.4 from CR-1) | Q5:B |
 | Story ID | `US-<epic>.<n>` | Plan step 5 |
 | Personas | P1 Maya (career-focused undergraduate), P2 Daniel (professional master's), P3 Priya (exploring first-year), P4 Sam (major switcher), P5 Team evaluator | Q2:B |
 | Journey tags | `J1.n` and `J2.n` = step n of vision MVP Journey 1 or 2 | Q1:A |
@@ -75,6 +75,31 @@
 **Display checklist**
 - [ ] Pinned courses are visibly marked as fixed in the plan
 - [ ] Unavailable terms are shown as blocked, in text and not only by color
+
+### US-1.4 Confirm the prerequisites I've already done *(CR-1)*
+**As** a student, **I want** to tick off the prerequisites I've already done for a course, **so that** the planner stops flagging them, for this course and for any other course that needs the same thing.
+- **Priority**: M
+- **Personas**: P1, P2, P3, P4
+- **Journey**: None (J2.4 benefits when a student has done an equivalent course)
+- **Traces to**: FR-1.9, FR-5.5, FR-5.7, FR-5.11, FR-7.4
+
+**Acceptance criteria**
+- **Given** I enter a course as in-progress or fixed, and it has prerequisites, **when** I submit it, **then** I'm offered a checklist of its prerequisite and corequisite items.
+- **Given** the first plan is shown, **when** a recommended or planned course has a verdict that isn't Met, **then** that course offers a "Confirm prerequisites" checklist. The first plan is not delayed by any checklist.
+- **Given** the prerequisite text "CS 2110 and a course in linear algebra, or permission of instructor", **when** the checklist is shown, **then** it lists CS 2110, "a course in linear algebra", and "permission of instructor" as separate items.
+- **Given** I tick CS 2110, **when** I submit, **then** CS 2110 is added to my completed courses, and every course whose prerequisites name CS 2110 is re-checked.
+- **Given** I tick PHYS 1112 and PHYS is not a loaded subject, **when** I submit, **then** PHYS 1112 counts as completed for prerequisites and is shown with a "not in loaded catalog" note.
+- **Given** I tick "permission of instructor" for one course, **when** another course also says "permission of instructor", **then** that other course still shows Needs review for that clause.
+- **Given** I leave an item unticked, **when** verdicts are computed, **then** the item counts as not done.
+- **Given** I confirm or remove an item, **when** the plan updates, **then** only affected verdicts and placements change, the plan still passes the validator, and the agent lists what changed.
+- **Given** the "Prerequisites I've confirmed" list in my profile, **when** I remove an item, **then** affected verdicts and placements are re-checked.
+- **Given** the session ends, **when** the app closes, **then** none of my confirmations are on disk.
+
+**Display checklist**
+- [ ] Each checklist item is a labeled checkbox, operable by keyboard
+- [ ] Clause items show the exact clause text from the catalog
+- [ ] "Not in loaded catalog" notes are shown in text
+- [ ] The "Prerequisites I've confirmed" list groups clause confirmations by course
 
 ---
 
@@ -191,7 +216,7 @@
 - **Priority**: M
 - **Personas**: P1, P2, P3, P4
 - **Journey**: J1.5, J2.3, J2.4
-- **Traces to**: FR-5.1, FR-5.2, FR-5.4, FR-5.6, FR-5.8, FR-5.10, NFR-2.2
+- **Traces to**: FR-5.1, FR-5.2, FR-5.4, FR-5.6, FR-5.8, FR-5.10, FR-5.11, NFR-2.2
 
 **Acceptance criteria**
 - **Given** a course whose prerequisite is satisfied by my completed, in-progress, or earlier-planned courses, **when** its verdict is shown, **then** it reads **Met**.
@@ -199,19 +224,22 @@
 - **Given** prerequisite text with ambiguous "and/or" grouping, **when** its verdict is shown, **then** the verdict uses the documented default reading and says an assumption was made.
 - **Given** a course that is a forbidden overlap with a completed course or another course in my plan, **when** its status is shown, **then** the overlap is flagged.
 - **Given** any verdict, **when** it is shown, **then** the original prerequisite text is shown with it.
-- The evaluator returns the same verdict every time for the same rule and course history (deterministic; no LLM call at check time).
+- **Given** a course whose only open item is a clause I confirmed for that course (US-1.4), **when** its verdict is shown, **then** it reads **Met (student-confirmed)**.
+- The evaluator returns the same verdict every time for the same rule, course history, and confirmations (deterministic; no LLM call at check time).
 
 ### US-5.2 See "Needs review" when a prerequisite can't be checked automatically
 **As** a student, **I want** to be told when a prerequisite needs a human decision, **so that** I know to ask an instructor or advisor instead of trusting a guess.
 - **Priority**: M
 - **Personas**: P1, P2, P4
 - **Journey**: None
-- **Traces to**: FR-5.3, FR-5.5, FR-5.7
+- **Traces to**: FR-5.3, FR-5.5, FR-5.7, FR-1.9
 
 **Acceptance criteria**
 - **Given** prerequisite text containing "or equivalent", "permission of instructor", "recommended", or a background-specific clause, **when** its verdict is shown, **then** it reads **Needs review** with the reason.
 - **Given** a rule stored as unverified because it failed an automated check at load time, **when** its verdict is shown, **then** it reads **Needs review (unverified parse)** with the original text.
 - **Given** a "Needs review" course, **when** a plan is built, **then** the course can still be placed, and the verdict stays visible in the plan.
+- **Given** a "Needs review" clause, **when** I confirm it in that course's checklist (US-1.4), **then** that clause no longer causes Needs review for that course.
+- **Given** a rule with an unverified parse, **when** its checklist is shown, **then** it lists the course codes found in the original text, and ticking them adds them to my completed courses, but the verdict stays **Needs review (unverified parse)**.
 
 **Display checklist**
 - [ ] The reason for "Needs review" is shown in text
@@ -346,7 +374,7 @@
 - **Traces to**: FR-8.1, FR-9.1, FR-9.2, FR-1.7
 
 **Acceptance criteria**
-- **Given** a validated plan, **when** I click download, **then** I get a Markdown file with the plan by term, my skills, each course's explanation and prerequisite verdict, the advisory notice, and Class Roster links.
+- **Given** a validated plan, **when** I click download, **then** I get a Markdown file with the plan by term, my skills, each course's explanation and prerequisite verdict, my confirmed prerequisites, the advisory notice, and Class Roster links.
 - **Given** an export, **when** it is created, **then** the server keeps no copy of it.
 
 **Display checklist**
@@ -495,6 +523,7 @@
 | US-1.1 Academic profile | ✓ | ✓ | ✓ | ✓ | |
 | US-1.2 Courses taken | ✓ | ✓ | ✓ | ✓ | |
 | US-1.3 Constraints and preferences | ✓ | | | ✓ | |
+| US-1.4 Confirm prerequisites (CR-1) | ✓ | ✓ | ✓ | ✓ | |
 | US-2.1 Career to skills | ✓ | ✓ | ✓ | ✓ | |
 | US-2.2 Vague goal | | | ✓ | | |
 | US-2.3 Edit skills | ✓ | ✓ | ✓ | ✓ | |
@@ -565,6 +594,7 @@ Both journeys trace end to end. These traces define the two example-based journe
 | FR-1.6 | US-1.3 |
 | FR-1.7 | US-11.2, US-8.1 |
 | FR-1.8 | US-1.1, US-11.2 |
+| FR-1.9 (CR-1) | US-1.4, US-5.2, US-8.1 |
 | FR-2.1 | US-2.1 |
 | FR-2.2 | US-2.2 |
 | FR-2.3 | US-2.1 |
@@ -578,12 +608,13 @@ Both journeys trace end to end. These traces define the two example-based journe
 | FR-4.5 | US-3.1, US-11.4 |
 | FR-5.1 to FR-5.3 | US-10.1 (load time), US-5.2 (display) |
 | FR-5.4 | US-5.1, US-5.3 |
-| FR-5.5 | US-5.2 |
+| FR-5.5 | US-5.2, US-1.4 |
 | FR-5.6 | US-5.1 |
-| FR-5.7 | US-5.2 |
+| FR-5.7 | US-5.2, US-1.4 |
 | FR-5.8 | US-5.1 |
 | FR-5.9 | US-5.3 |
 | FR-5.10 | US-5.1 |
+| FR-5.11 (CR-1) | US-5.1, US-1.4 |
 | FR-6.1 to FR-6.3 | US-6.1 |
 | FR-6.4 | US-6.2 |
 | FR-6.5 | US-6.1 |

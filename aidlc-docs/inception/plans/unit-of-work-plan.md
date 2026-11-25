@@ -201,14 +201,14 @@ B) Other: write the assignment after [Answer]: below, as "U1: name; U2: name; U3
 ## Execution Checklist (Part 2: Generation)
 These steps run only after every answer is in, ambiguities are resolved, and the plan is approved. Each box is marked [x] as soon as its step is done.
 
-- [ ] 1. Define each unit: purpose, modules and components, owner, responsibilities, interfaces it provides and consumes, and definition of done
-- [ ] 2. Document the code organization strategy (greenfield): directory ownership per unit, test layout, scripts, fixtures (Question 10)
-- [ ] 3. Document any Unit 0 spike and contracts step (Questions 4 and 5)
-- [ ] 4. Document the Construction sequence and NFR handling (Questions 6 and 7), marked provisional per the execution plan
-- [ ] 5. Write `unit-of-work.md`
-- [ ] 6. Build the unit dependency matrix: which unit provides which interface to which, and what can be faked (Question 8)
-- [ ] 7. Write `unit-of-work-dependency.md`, with a Mermaid diagram and text alternative
-- [ ] 8. Assign every story (US-1.1 to US-11.4, including US-1.4) to a primary unit and list contributing units
-- [ ] 9. Write `unit-of-work-story-map.md`
-- [ ] 10. Validate: every story assigned; every component (C1 to C34) in exactly one unit; no dependency cycle between units; the deterministic core units do not depend on U4
-- [ ] 11. Run the extension compliance check (Security, Resiliency, PBT) for this stage
+- [x] 1. Define each unit: purpose, modules and components, owner, responsibilities, interfaces it provides and consumes, and definition of done
+- [x] 2. Document the code organization strategy (greenfield): directory ownership per unit, test layout, scripts, fixtures (Question 10)
+- [x] 3. Document any Unit 0 spike and contracts step (Questions 4 and 5)
+- [x] 4. Document the Construction sequence and NFR handling (Questions 6 and 7), marked provisional per the execution plan
+- [x] 5. Write `unit-of-work.md`
+- [x] 6. Build the unit dependency matrix: which unit provides which interface to which, and what can be faked (Question 8)
+- [x] 7. Write `unit-of-work-dependency.md`, with a Mermaid diagram and text alternative
+- [x] 8. Assign every story (US-1.1 to US-11.4, including US-1.4) to a primary unit and list contributing units
+- [x] 9. Write `unit-of-work-story-map.md`
+- [x] 10. Validate: every story assigned; every component (C1 to C34) in exactly one unit; no dependency cycle between units; the deterministic core units do not depend on U4
+- [x] 11. Run the extension compliance check (Security, Resiliency, PBT) for this stage

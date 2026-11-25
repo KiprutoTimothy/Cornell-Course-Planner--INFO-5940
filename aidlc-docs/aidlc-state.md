@@ -4,7 +4,7 @@
 - **Project Name**: Cornell AI Course Planning Agent
 - **Project Type**: Greenfield
 - **Start Date**: 2026-11-24T16:59:35Z
-- **Current Stage**: INCEPTION - Units Generation, Part 1 Planning (awaiting answers in unit-of-work-plan.md)
+- **Current Stage**: INCEPTION COMPLETE - Construction on hold pending team review of the Construction plan
 - **Team Size**: 5
 - **Hard Deadline**: 2026-12-16 (final project deadline)
 - **Input Document**: docs/vision.md
@@ -45,7 +45,7 @@
 - [x] User Stories - APPROVED
 - [x] Workflow Planning - APPROVED
 - [x] Application Design - APPROVED
-- [ ] Units Generation - IN PROGRESS (Part 1 Planning)
+- [x] Units Generation - APPROVED (5 units: U1 Addis, U2 Carey, U3 Timothy, U4 Revanth, U5 Erick)
 
 ### 🟢 CONSTRUCTION PHASE
 - [ ] Functional Design - EXECUTE (per unit with business logic)
@@ -59,6 +59,11 @@
 - [ ] Operations - PLACEHOLDER
 
 ## Current Status
-- **Lifecycle Phase**: INCEPTION
-- **Current Stage**: Units Generation (last Inception stage)
-- **Next Stage**: CONSTRUCTION (on hold until the team reviews the Construction plan)
+- **Lifecycle Phase**: INCEPTION complete
+- **Current Stage**: None active
+- **Next Stage**: CONSTRUCTION - begins with Unit 0 model spike and the contracts step (U4, Revanth), then shared NFR Requirements and NFR Design
+- **Status**: On hold. The team will review the provisional Construction plan (execution-plan.md; unit-of-work.md section 5) before starting.
+- **Open items**:
+  - README.md section 8: Member 1 is Timothy, Member 3 is Carey (owner: Addis)
+  - docs/technical-environment.md: update Example 2 and the PBT list for CR-1 (owner: Revanth)
+  - Name the second LangGraph-experienced member to pair on U4 (team)

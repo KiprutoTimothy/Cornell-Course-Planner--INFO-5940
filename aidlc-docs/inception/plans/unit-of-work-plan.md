@@ -180,7 +180,7 @@ B) The Question 3 answer is correct: 1 Timothy, 2 Addis, 3 Carey, 4 Revanth, 5 E
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question F2
 Who owns each Construction unit?
@@ -194,7 +194,7 @@ A) By fit with each member's Inception work:
 
 B) Other: write the assignment after [Answer]: below, as "U1: name; U2: name; U3: name; U4: name; U5: name"
 
-[Answer]: 
+[Answer]: A
 
 ---
 

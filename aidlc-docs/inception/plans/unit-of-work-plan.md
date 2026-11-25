@@ -167,6 +167,37 @@ C) Other (please describe after [Answer]: tag below)
 
 ---
 
+## Follow-up Questions (from the answer review)
+
+Questions 1, 2 and 4 to 11 are clear. Question 3 needs two follow-ups: the answer lists who held each **Inception role**, not who owns each **unit**, and its names differ from the README team table.
+
+## Question F1
+The Question 3 answer gives role 1 (GitHub and AI-DLC workflow) to Timothy and role 3 (vision and requirements) to Carey. The README team table (section 8) has the reverse: Carey Manwa is Member 1 and Timothy Kipruto is Member 3. Which is correct?
+
+A) The README is correct: 1 Carey, 2 Addis, 3 Timothy, 4 Revanth, 5 Erick. Question 3's answer had roles 1 and 3 swapped.
+
+B) The Question 3 answer is correct: 1 Timothy, 2 Addis, 3 Carey, 4 Revanth, 5 Erick. The README team table must be fixed (Member 2 owns the README).
+
+C) Other (please describe after [Answer]: tag below)
+
+[Answer]: 
+
+## Question F2
+Who owns each Construction unit?
+
+A) By fit with each member's Inception work:
+- U1 Catalog Data: Addis (Member 2)
+- U2 Prerequisite Engine: the vision and requirements owner (Member 3), who wrote the prerequisite requirements
+- U3 Planner: the GitHub and AI-DLC workflow owner (Member 1), who keeps the workflow role as well
+- U4 Agent and Services, plus the Unit 0 spike and the contracts step: Revanth (Member 4)
+- U5 Web and Evaluation, plus the shared NFR stages' QA review: Erick (Member 5)
+
+B) Other: write the assignment after [Answer]: below, as "U1: name; U2: name; U3: name; U4: name; U5: name"
+
+[Answer]: 
+
+---
+
 ## Execution Checklist (Part 2: Generation)
 These steps run only after every answer is in, ambiguities are resolved, and the plan is approved. Each box is marked [x] as soon as its step is done.
 

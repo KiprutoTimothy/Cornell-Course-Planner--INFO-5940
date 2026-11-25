@@ -287,7 +287,7 @@ B) Ask first. After recommendations are ranked and before placement, the student
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question C2
 A3:A adds a checked-off course code to completed courses. Some prerequisites name courses outside the loaded subjects (for example PHYS 1112 when PHYS isn't loaded). FR-1.2 says such codes are kept with a warning but do **not** satisfy prerequisites. What happens if the student checks one off in a prerequisite checklist?
@@ -298,7 +298,7 @@ B) It doesn't count. Only codes in the loaded catalog can be checked off. Others
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question C3
 `docs/technical-environment.md` differs from the approved `requirements.md` in these points:
@@ -315,7 +315,7 @@ B) The requirements win. The technical environment owner updates `docs/technical
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ---
 

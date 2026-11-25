@@ -51,7 +51,7 @@ C) Vertical slices following the epics (for example profile, career, planning, r
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 2
 The Ingestion Parser (C24, LLM parsing of complex prerequisite text at load time) is in the `agent` module, but it serves ingestion. Which unit owns it?
@@ -64,7 +64,7 @@ C) U4 Agent and Services: all LLM code has one owner
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C
 
 ## Question 3
 Who owns each unit? Inception roles were: 1 GitHub and AI-DLC workflow; 2 README and product proposal; 3 vision and requirements; 4 technical environment and application design (Revanth); 5 user stories, units, and QA (Erick). The technical environment document says at least two members have LangGraph experience and lead agent design.
@@ -73,7 +73,7 @@ A) Assign by fit: the LangGraph-experienced members own U4 and U3; Member 4 (Rev
 
 B) Other: write the assignment, for example "U1: name; U2: name; ..." after [Answer]: below
 
-[Answer]: 
+[Answer]: 1 GitHub and AI-DLC workflow; (Timothy) 2 README and product proposal (Addis); 3 vision and requirements ( Carey); 4 technical environment and application design (Revanth); 5 user stories, units, and QA (Erick)
 
 ## Question 4
 The execution plan recommends measuring local model speed and tool-calling first, because NFR-1.1 (90 seconds) rests on an untested assumption. How should this risk check be handled?
@@ -86,7 +86,7 @@ C) Skip it; measure during Build and Test
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 5
 Several units depend on shared data shapes: Rule Model (C9), Verdict (C12), Planning Models (C15), and the service signatures (C27). How should these be fixed before parallel work starts?
@@ -97,7 +97,7 @@ B) Each owner defines their own models; integrate and reconcile later
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 6
 How should units run through Construction?
@@ -110,7 +110,7 @@ C) Parallel in two waves: wave 1 is U1, U2, U3 (deterministic core, no model nee
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C
 
 ## Question 7
 NFR Requirements and NFR Design are mostly shared (security headers, logging, timeouts, retries, health checks). How should they run?
@@ -121,7 +121,7 @@ B) Separately for each unit
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 8
 How should the web unit (U5) work before the services (U4) exist?
@@ -132,7 +132,7 @@ B) Wait for U4 to finish services first
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 9
 The test fixture catalog (about 30 courses in `tests/fixtures/snapshot/`, per the technical environment) is used by every unit's tests. Who builds it, and when?
@@ -143,7 +143,7 @@ B) Each unit builds its own small fixtures
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 10
 How should the code be organized?
@@ -152,7 +152,7 @@ A) Exactly the repository layout in `docs/technical-environment.md`: `src/course
 
 B) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 11
 Where should the Should Have story US-8.1 (Markdown export) go, given the deadline?
@@ -163,7 +163,7 @@ B) In U4 (ExportService), with U5 adding only the download route
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ---
 

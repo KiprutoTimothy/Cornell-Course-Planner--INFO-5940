@@ -432,6 +432,9 @@ Hypothesis is mandatory for every deterministic component. Required invariants:
   - having taken every course named in a rule never gives `Not met`
   - missing courses are always a subset of the courses the rule names
   - adding completed courses never turns `Met` into `Not met`
+  - confirming clauses never turns `Met` into `Not met` or `Needs review` (CR-1, FR-1.9)
+  - a verdict is marked `student_confirmed` only when at least one clause was confirmed (CR-1, FR-5.11)
+- **Checklist builder** (CR-1): the items are exactly the course codes and non-course clauses named in the rule, with no duplicates (FR-1.9.2).
 - **Plan validator and fixer**:
   - the fixer's output always passes the validator
   - every placed course comes after its prerequisites
@@ -544,7 +547,7 @@ Rules shown:
 
 ```python
 from enum import StrEnum
-from typing import Annotated, Literal
+from typing import Annotated, Literal, NamedTuple
 
 from pydantic import BaseModel, Field
 
@@ -565,6 +568,7 @@ class ReviewFlag(BaseModel):
 
     kind: Literal["review"] = "review"
     reason: str
+    clause_id: str  # CR-1: the checklist item the student can confirm for this course
 
 
 class AllOf(BaseModel):
@@ -587,6 +591,14 @@ class Verdict(BaseModel):
     missing: frozenset[str] = frozenset()
     reasons: tuple[str, ...] = ()
     original_text: str
+    student_confirmed: bool = False  # CR-1: Met that relies on a confirmed clause
+
+
+class _Result(NamedTuple):
+    status: Status
+    missing: frozenset[str] = frozenset()
+    reasons: tuple[str, ...] = ()
+    confirmed: bool = False  # Met only because of a student-confirmed clause
 
 
 def evaluate(
@@ -594,6 +606,7 @@ def evaluate(
     taken: frozenset[str],
     original_text: str,
     verified: bool = True,
+    confirmed_clauses: frozenset[str] = frozenset(),
 ) -> Verdict:
     """Evaluate a stored prerequisite rule against completed and earlier-planned courses.
 
@@ -602,9 +615,10 @@ def evaluate(
         taken: Normalized codes of completed, in-progress, and earlier-term courses.
         original_text: Catalog prerequisite text, always returned for display.
         verified: False when the LLM parse failed the automated checks.
+        confirmed_clauses: Clause IDs the student confirmed for this course only (FR-1.9.4).
 
     Returns:
-        Verdict with status, missing courses, and reasons.
+        Verdict with status, missing courses, reasons, and the student-confirmed marker.
     """
     if not verified:
         return Verdict(
@@ -614,35 +628,45 @@ def evaluate(
         )
     if rule is None:
         return Verdict(status=Status.MET, original_text=original_text)
-    status, missing, reasons = _evaluate(rule, taken)
-    return Verdict(status=status, missing=missing, reasons=reasons, original_text=original_text)
+    result = _evaluate(rule, taken, confirmed_clauses)
+    return Verdict(
+        status=result.status,
+        missing=result.missing,
+        reasons=result.reasons,
+        original_text=original_text,
+        student_confirmed=result.confirmed,
+    )
 
 
-def _evaluate(rule: Rule, taken: frozenset[str]) -> tuple[Status, frozenset[str], tuple[str, ...]]:
+def _evaluate(rule: Rule, taken: frozenset[str], confirmed_clauses: frozenset[str]) -> _Result:
     if isinstance(rule, CourseReq):
         if rule.code in taken:
-            return Status.MET, frozenset(), ()
-        return Status.NOT_MET, frozenset({rule.code}), ()
+            return _Result(Status.MET)
+        return _Result(Status.NOT_MET, frozenset({rule.code}))
     if isinstance(rule, ReviewFlag):
-        return Status.NEEDS_REVIEW, frozenset(), (rule.reason,)
+        if rule.clause_id in confirmed_clauses:
+            return _Result(Status.MET, confirmed=True)
+        return _Result(Status.NEEDS_REVIEW, reasons=(rule.reason,))
 
-    results = [_evaluate(item, taken) for item in rule.items]
-    reasons = tuple(reason for _, _, rs in results for reason in rs)
+    results = [_evaluate(item, taken, confirmed_clauses) for item in rule.items]
+    reasons = tuple(reason for result in results for reason in result.reasons)
+    met = [result for result in results if result.status is Status.MET]
 
     if isinstance(rule, AllOf):
-        not_met = [missing for status, missing, _ in results if status is Status.NOT_MET]
+        not_met = [result.missing for result in results if result.status is Status.NOT_MET]
         if not_met:
-            return Status.NOT_MET, frozenset().union(*not_met), reasons
-        if any(status is Status.NEEDS_REVIEW for status, _, _ in results):
-            return Status.NEEDS_REVIEW, frozenset(), reasons
-        return Status.MET, frozenset(), ()
+            return _Result(Status.NOT_MET, frozenset().union(*not_met), reasons)
+        if any(result.status is Status.NEEDS_REVIEW for result in results):
+            return _Result(Status.NEEDS_REVIEW, reasons=reasons)
+        return _Result(Status.MET, confirmed=any(result.confirmed for result in met))
 
-    if any(status is Status.MET for status, _, _ in results):
-        return Status.MET, frozenset(), ()
-    if any(status is Status.NEEDS_REVIEW for status, _, _ in results):
-        return Status.NEEDS_REVIEW, frozenset(), reasons
-    cheapest = min((missing for _, missing, _ in results), key=lambda m: (len(m), sorted(m)))
-    return Status.NOT_MET, cheapest, reasons
+    if met:
+        # Prefer a branch the student met without relying on a confirmed clause.
+        return _Result(Status.MET, confirmed=all(result.confirmed for result in met))
+    if any(result.status is Status.NEEDS_REVIEW for result in results):
+        return _Result(Status.NEEDS_REVIEW, reasons=reasons)
+    cheapest = min((result.missing for result in results), key=lambda m: (len(m), sorted(m)))
+    return _Result(Status.NOT_MET, cheapest, reasons)
 ```
 
 Rules shown:
@@ -651,6 +675,9 @@ Rules shown:
 - full type hints and a Google-style docstring
 - the original text always travels with the verdict
 - deterministic tie-breaking
+- confirmed clauses apply only to the course being checked; the caller passes that course's clause IDs (CR-1, FR-1.9.4)
+- "Met (student-confirmed)" is a marker on Met, not a fourth status (CR-1, FR-5.11)
+- an unverified parse stays "Needs review" even when clauses are confirmed (FR-5.7)
 
 ### Example 3: Test (example-based and property-based)
 
@@ -697,8 +724,32 @@ def test_evaluate_unverified_parse_needs_review() -> None:
     assert "unverified parse" in verdict.reasons
 
 
+POI_TEXT = "CS 2110 or permission of instructor."
+POI_RULE = AnyOf(
+    items=[
+        CourseReq(code="CS 2110"),
+        ReviewFlag(reason="permission of instructor", clause_id="poi"),
+    ]
+)
+
+
+def test_confirmed_clause_gives_student_confirmed_met() -> None:
+    verdict = evaluate(POI_RULE, frozenset(), POI_TEXT, confirmed_clauses=frozenset({"poi"}))
+    assert verdict.status is Status.MET
+    assert verdict.student_confirmed
+
+
+def test_course_branch_is_preferred_over_confirmed_clause() -> None:
+    verdict = evaluate(POI_RULE, frozenset({"CS 2110"}), POI_TEXT, confirmed_clauses=frozenset({"poi"}))
+    assert verdict.status is Status.MET
+    assert not verdict.student_confirmed
+
+
 codes = st.from_regex(r"[A-Z]{2,4} [1-6][0-9]{3}", fullmatch=True)
-leaves = codes.map(lambda c: CourseReq(code=c)) | st.just(ReviewFlag(reason="permission of instructor"))
+clause_ids = st.sampled_from(["poi", "equivalent", "linear-algebra"])
+leaves = codes.map(lambda c: CourseReq(code=c)) | clause_ids.map(
+    lambda c: ReviewFlag(reason=c, clause_id=c)
+)
 rules: st.SearchStrategy[Rule] = st.recursive(
     leaves,
     lambda children: st.lists(children, min_size=1, max_size=3).flatmap(
@@ -734,6 +785,19 @@ def test_more_courses_never_turn_met_into_not_met(
 ) -> None:
     if evaluate(rule, taken, "text").status is Status.MET:
         assert evaluate(rule, taken | extra, "text").status is Status.MET
+
+
+@given(rule=rules, taken=st.frozensets(codes, max_size=6), confirmed=st.frozensets(clause_ids))
+def test_confirming_clauses_never_breaks_met(
+    rule: Rule, taken: frozenset[str], confirmed: frozenset[str]
+) -> None:
+    if evaluate(rule, taken, "text").status is Status.MET:
+        assert evaluate(rule, taken, "text", confirmed_clauses=confirmed).status is Status.MET
+
+
+@given(rule=rules, taken=st.frozensets(codes, max_size=6))
+def test_no_confirmed_clauses_is_never_student_confirmed(rule: Rule, taken: frozenset[str]) -> None:
+    assert not evaluate(rule, taken, "text").student_confirmed
 ```
 
 Rules shown:

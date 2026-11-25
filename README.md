@@ -12,7 +12,9 @@ Every recommendation comes with a short explanation and a link to the official C
  
 > **Advisory only.** This tool does not check graduation requirements and is not an official degree audit. Always confirm your plan with your academic advisor.
  
-**Project status:** Inception phase (AI-DLC). Requirements Analysis approved 2026-11-24; User Stories in progress. No application code yet. See [`aidlc-docs/aidlc-state.md`](aidlc-docs/aidlc-state.md).
+**Project status:** Inception phase complete (AI-DLC v1.0.1). All Inception stages approved 2026-11-24; Construction starts in the final project. No application code yet. See [`aidlc-docs/aidlc-state.md`](aidlc-docs/aidlc-state.md).
+
+**Coding agent:** Claude Code, following AI-DLC v1.0.1 (rules in [`CLAUDE.md`](CLAUDE.md) and [`.aidlc-rule-details/`](.aidlc-rule-details/)).
  
 ---
  
@@ -208,13 +210,21 @@ One command runs all automated metrics and writes a dated results report.
  
 | # | Name | NetID | Inception responsibilities |
 |---|---|---|---|
-| 1 | [Carey Manwa] | [com34] | **GitHub setup and AI-DLC workflow:** create the repository and add members, install and configure AI-DLC v1.0.1, lead the shared workflow, maintain `audit.md` and `aidlc-state.md`, handle the final submission |
-| 2 | [Addis Sahle] | [as3734] | **README and product proposal:** problem statement, why an LLM agent fits, planned LLM integration and scope, team and collaboration plan |
-| 3 | [Timothy Kipruto] | [tkk24] | **Vision and requirements:** target users and objectives, MVP and out-of-scope features, open questions, lead Requirements Analysis |
-| 4 | [Venkata Sai Revanth Damisetty] | [vd259] | **Technical environment and application design:** Cornell data sources, tech stack and LLM, retrieval and recommendation design, agent tools, security requirements, testing framework, technical environment document and code examples |
-| 5 | [Erick Muriungi] | [ekm82] | **User stories, units of work, and QA:** user stories, units of work, evaluation profiles and test cases |
+| 1 | Timothy Kipruto | tkk24 | **GitHub setup and AI-DLC workflow:** create the repository and add members, install and configure AI-DLC v1.0.1, lead the shared workflow, maintain `audit.md` and `aidlc-state.md`, handle the final submission |
+| 2 | Addis Sahle | as3734 | **README and product proposal:** problem statement, why an LLM agent fits, planned LLM integration and scope, team and collaboration plan |
+| 3 | Carey Manwa | com34 | **Vision and requirements:** target users and objectives, MVP and out-of-scope features, open questions, lead Requirements Analysis |
+| 4 | Venkata Sai Revanth Damisetty | vd259 | **Technical environment and application design:** Cornell data sources, tech stack and LLM, retrieval and recommendation design, agent tools, security requirements, testing framework, technical environment document and code examples |
+| 5 | Erick Muriungi | ekm82 | **User stories, units of work, and QA:** user stories, units of work, evaluation profiles and test cases |
  
-Construction work will be split during the AI-DLC **Units Generation** stage, and each member will own one or more units.
+**Construction ownership** (set during AI-DLC Units Generation; see [`unit-of-work.md`](aidlc-docs/inception/application-design/unit-of-work.md)):
+
+| Unit | Owner |
+|---|---|
+| U1 Catalog Data | Addis Sahle |
+| U2 Prerequisite Engine | Carey Manwa |
+| U3 Planner | Timothy Kipruto |
+| U4 Agent and Services (plus the model spike and contracts step) | Venkata Sai Revanth Damisetty |
+| U5 Web and Evaluation | Erick Muriungi |
  
 ---
  
@@ -239,7 +249,7 @@ Construction work will be split during the AI-DLC **Units Generation** stage, an
  
 | Phase | Work | Target |
 |---|---|---|
-| Inception | Vision, requirements ✅, user stories, workflow planning, application design, units of work | Late Nov 2026 |
+| Inception | Vision ✅, requirements ✅, user stories ✅, workflow planning ✅, application design ✅, units of work ✅ | Completed Nov 24, 2026 |
 | Construction | Per-unit design and code, build and test, evaluation runs | Early Dec 2026 |
 | Final | Evaluation report, demo video of both MVP journeys, submission | **Dec 16, 2026** |
  
@@ -254,13 +264,16 @@ Current (Inception):
 ├── README.md                     # this file: product proposal and setup
 ├── CLAUDE.md                     # AI-DLC workflow rules for the coding agent
 ├── docs/
-│   └── vision.md                 # product vision and MVP definition
+│   ├── vision.md                 # product vision and MVP definition
+│   └── technical-environment.md  # tech stack, standards, example code
 ├── aidlc-docs/
 │   ├── aidlc-state.md            # current stage and progress
 │   ├── audit.md                  # log of decisions and approvals
 │   └── inception/
 │       ├── requirements/         # requirements + question files
-│       └── plans/                # user story plan and assessment
+│       ├── user-stories/         # stories and personas
+│       ├── plans/                # execution plan and stage plans
+│       └── application-design/   # components, services, units of work
 └── .aidlc-rule-details/          # AI-DLC v1.0.1 rule files
 ```
  
@@ -286,6 +299,11 @@ Exact commands will be finalized in the technical environment document. The plan
 | Document | Contents |
 |---|---|
 | [`docs/vision.md`](docs/vision.md) | Problem, users, full vision, MVP scope, risks |
+| [`docs/technical-environment.md`](docs/technical-environment.md) | Tech stack, models, security and testing standards, example code |
 | [`aidlc-docs/inception/requirements/requirements.md`](aidlc-docs/inception/requirements/requirements.md) | Approved functional and non-functional requirements, with every decision traced |
+| [`aidlc-docs/inception/user-stories/stories.md`](aidlc-docs/inception/user-stories/stories.md) and [`personas.md`](aidlc-docs/inception/user-stories/personas.md) | User stories with acceptance criteria, and personas |
+| [`aidlc-docs/inception/plans/execution-plan.md`](aidlc-docs/inception/plans/execution-plan.md) | Which AI-DLC stages run, and the timeline |
+| [`aidlc-docs/inception/application-design/application-design.md`](aidlc-docs/inception/application-design/application-design.md) | Components, services, and main flows |
+| [`aidlc-docs/inception/application-design/unit-of-work.md`](aidlc-docs/inception/application-design/unit-of-work.md) | Units of work, owners, dependencies, and story map |
 | [`aidlc-docs/aidlc-state.md`](aidlc-docs/aidlc-state.md) | Current AI-DLC stage |
 | [`aidlc-docs/audit.md`](aidlc-docs/audit.md) | Decision and approval log |

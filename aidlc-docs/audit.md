@@ -192,3 +192,19 @@
 **Context**: INCEPTION - Units Generation APPROVED; INCEPTION phase COMPLETE; CONSTRUCTION on hold
 
 ---
+
+## Post-Inception - Milestone Check
+**Timestamp**: 2026-11-25T04:47:21Z (logged retroactively; request made shortly before)
+**User Input**: "I want you to check the repo against the milestone instructions in milestone.md and flag any unfinished tasks"
+**AI Response**: "Checked the repository against milestone.md without changing files. Flagged: commit 38514e8 (Units Generation artifacts, final audit and state) not pushed; README does not name the coding agent; README section 8 has Members 1 and 3 swapped and bracketed names and NetIDs; README status, timeline, repository structure, and Key Documents out of date; technical-environment.md Example 2 and PBT list not updated for CR-1 (open item); .gitignore change uncommitted. Confirmed: rule files committed, input documents complete, all Inception artifacts present, no blank [Answer]: tags, repository public."
+**Context**: Post-INCEPTION review against the milestone
+
+---
+
+## Post-Inception - Open-Item Fixes
+**Timestamp**: 2026-11-25T04:47:21Z
+**User Input**: "Resolve all the fixes. 1 is Timothy and 3 is Carey" (on the proposed plan: "Make the changes in the plan but do not commit any code")
+**AI Response**: "Resolved the two open items from Units Generation at the instruction of Timothy (Member 1). README.md: Member 1 Timothy Kipruto (tkk24), Member 3 Carey Manwa (com34), per F1:B; brackets removed; coding agent named (Claude Code, AI-DLC v1.0.1); status, timeline, repository structure, Key Documents updated; unit owners added per F2:A. technical-environment.md, for CR-1 and matching component-methods.md C9 and C12: Example 2 adds ReviewFlag.clause_id, Verdict.student_confirmed, and confirmed_clauses (unverified parse still Needs review, FR-5.7); Example 3 adds two example tests and two properties; PBT list adds two evaluator invariants and the Checklist Builder invariant (FR-1.9.2). Examples run: 10 tests passed. Nothing committed. Review requested from the item owners: Addis (README) and Revanth (technical environment)."
+**Context**: Post-INCEPTION open-item resolution; owner review pending
+
+---

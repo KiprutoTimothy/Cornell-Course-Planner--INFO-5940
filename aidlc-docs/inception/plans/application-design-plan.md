@@ -41,7 +41,7 @@ C) Only when the student opens a course and chooses "check my prerequisites"
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question A2
 Which prerequisite items appear in the checklist?
@@ -52,7 +52,7 @@ B) Course codes plus non-course clauses as separate items (for example "or equiv
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question A3
 If the student checks off a **course code** (for example CS 2110), what happens?
@@ -63,7 +63,7 @@ B) It is stored separately as a "student-confirmed prerequisite". It satisfies p
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question A4
 If the student checks off a **non-course clause** (for example "or equivalent", "permission of instructor"), how is the verdict shown? Today those clauses always give "Needs review" (FR-5.5).
@@ -76,7 +76,7 @@ C) Not applicable (Question A2 answered A: non-course clauses are not in the che
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question A5
 How should "the same prerequisite" be matched when another course comes up?
@@ -87,7 +87,7 @@ B) Course codes match exactly; non-course clauses match only within the same cou
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question A6
 What happens with items the student leaves unchecked?
@@ -98,7 +98,7 @@ B) They count as unknown, and the app asks again the next time a course needs th
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question A7
 The profile is currently session only, with nothing written to disk (CQ7:D, FR-1.7). Should the checklist selections follow the same rule?
@@ -109,7 +109,7 @@ B) No: saving them to disk changes the earlier persistence decision (please desc
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question A8
 Can the student review and undo their checked-off items?
@@ -122,7 +122,7 @@ C) No: selections stay for the session
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ---
 
@@ -137,7 +137,7 @@ B) Separate services: web app, agent service, and search service as separate pro
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question B2
 How should the first plan be produced (profile and goal in, plan out)?
@@ -150,7 +150,7 @@ C) A LangGraph state graph with fixed nodes for the first plan and an agent node
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. A LangGraph state graph: fixed nodes for map skills, search, check prerequisites, propose plan, validate, and retry/fix; one agent node for chat revision and "why" questions (per docs/technical-environment.md)
 
 ## Question B3
 How fine-grained should the agent's tools be (for chat revision and "why" questions)?
@@ -161,7 +161,7 @@ B) Fine-grained tools over raw data (for example `get_prereq_text`, `get_offerin
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question B4
 Where should plan changes requested in chat be applied?
@@ -172,7 +172,7 @@ B) The agent edits the plan object directly, then the validator runs
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question B5
 How should the catalog snapshot and search index be stored?
@@ -185,7 +185,7 @@ C) SQLite for everything, including embeddings (for example the sqlite-vec exten
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. SQLite (with an FTS5 table for keyword search) plus a local Chroma persistent collection for embeddings; no FAISS (per docs/technical-environment.md)
 
 ## Question B6
 Should the large snapshot files be committed to git? (Q8:B says the snapshot is committed.)
@@ -198,7 +198,7 @@ C) Commit only the raw API responses; every member builds the database and index
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. Commit the raw Class Roster responses and the parsed rules (`data/snapshot/prereq_rules.json`). `catalog.sqlite3` and `chroma/` are git-ignored and rebuilt by one command, `scripts/build_index.py` (per docs/technical-environment.md)
 
 ## Question B7
 How should session state (profile, skills, plan, checklist selections) be held? Nothing is written to disk.
@@ -209,7 +209,7 @@ B) In the browser (signed cookie or hidden form fields) and sent with every requ
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. 60-minute idle timeout
 
 ## Question B8
 How should the server-rendered UI update the page (form, chat, plan view)?
@@ -222,7 +222,7 @@ C) Small hand-written JavaScript files for the chat and plan view
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question B9
 How should the app talk to the LLM?
@@ -233,7 +233,7 @@ B) Each component creates its own LangChain model client
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. The gateway lives in the `agent` module; `catalog`, `prereq`, and `planner` never import it (NFR-7.1)
 
 ## Question B10
 How should the evaluation harness run the app?
@@ -246,7 +246,7 @@ C) In-process for accuracy metrics, plus one HTTP run for the time-to-first-plan
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question B11
 Where should the team-reviewed career-to-skill mappings (FR-2.4) live?
@@ -257,7 +257,7 @@ B) Inside the snapshot database, generated during ingestion
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. As a JSON file (docs/technical-environment.md allows YAML only for Docker Compose and CI)
 
 ## Question B12
 How should components be split for ownership, given each member owns one or more units later?
@@ -270,7 +270,7 @@ C) Decide in Units Generation; this stage only defines components
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ---
 

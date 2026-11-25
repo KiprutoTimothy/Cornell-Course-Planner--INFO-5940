@@ -119,3 +119,11 @@
 **Context**: INCEPTION - Application Design, Steps 1 to 6 (awaiting answers)
 
 ---
+
+## Application Design - Answers Received
+**Timestamp**: 2026-11-25T00:16:33Z
+**User Input**: "application design plan done and approved by Revanth"
+**AI Response**: "Read application-design-plan.md. All 20 answered. Raw answers: A1 B; A2 B; A3 A; A4 A; A5 B; A6 A; A7 A; A8 A; B1 A; B2 'C. A LangGraph state graph: fixed nodes for map skills, search, check prerequisites, propose plan, validate, and retry/fix; one agent node for chat revision and \"why\" questions (per docs/technical-environment.md)'; B3 A; B4 A; B5 'A. SQLite (with an FTS5 table for keyword search) plus a local Chroma persistent collection for embeddings; no FAISS (per docs/technical-environment.md)'; B6 'C. Commit the raw Class Roster responses and the parsed rules (data/snapshot/prereq_rules.json). catalog.sqlite3 and chroma/ are git-ignored and rebuilt by one command, scripts/build_index.py (per docs/technical-environment.md)'; B7 'A. 60-minute idle timeout'; B8 A; B9 'A. The gateway lives in the agent module; catalog, prereq, and planner never import it (NFR-7.1)'; B10 A; B11 'A. As a JSON file (docs/technical-environment.md allows YAML only for Docker Compose and CI)'; B12 A. Also read docs/technical-environment.md (new, binding technical reference). Step 8 analysis: (1) A1:B does not say whether checklists for recommended courses come before or after the first plan, which affects NFR-1.1 timing; (2) A3:A conflicts with FR-1.2 for checked-off codes outside the loaded catalog; (3) technical-environment.md differs from approved requirements.md (Ollama only vs Ollama or LM Studio; macOS and Windows only vs Linux in NFR-6.1; GitHub Actions CI vs 'No CI pipeline' at SECURITY-13; concrete retry, timeout, rate-limit values). Added Section C with follow-up questions C1 to C3, plus 4 design decisions taken without a question (read-only proposal tools per LLM06; 'Met (student-confirmed)' as a flag on Met, keeping 3 statuses; deterministic ranking in planner; ingestion LLM parse in agent with checks in prereq). Plan approval by Revanth recorded but generation waits for C1 to C3 per application-design.md Step 9."
+**Context**: INCEPTION - Application Design, Steps 7 to 9 (follow-up questions)
+
+---

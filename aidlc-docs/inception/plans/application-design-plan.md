@@ -274,11 +274,65 @@ D) Other (please describe after [Answer]: tag below)
 
 ---
 
+# Section C: Follow-up Questions (from the answer review)
+
+The answers to Sections A and B are complete. Three points still need a decision before generation: two gaps in the CR-1 answers, and one set of differences between `requirements.md` and `docs/technical-environment.md`. The technical environment document asks that such differences be settled through the workflow, not chosen silently.
+
+## Question C1
+A1:B shows a checklist whenever a recommended or planned course has prerequisites the student hasn't already covered. When does that happen relative to building the first plan?
+
+A) Plan first. The first plan uses only the courses the student entered. Each course with an unmet prerequisite shows a "Confirm prerequisites" checklist, and confirming items re-checks verdicts and placements incrementally (FR-7.4). The 90-second first-plan timing is unaffected.
+
+B) Ask first. After recommendations are ranked and before placement, the student sees one combined checklist of every distinct unmet item across the recommended courses. The plan is built after they submit it, and the 90-second timing excludes the time the student spends on the checklist.
+
+C) Other (please describe after [Answer]: tag below)
+
+[Answer]: 
+
+## Question C2
+A3:A adds a checked-off course code to completed courses. Some prerequisites name courses outside the loaded subjects (for example PHYS 1112 when PHYS isn't loaded). FR-1.2 says such codes are kept with a warning but do **not** satisfy prerequisites. What happens if the student checks one off in a prerequisite checklist?
+
+A) It counts. A checked-off code taken from the course's own prerequisite text satisfies that prerequisite everywhere, even if the code isn't in the loaded catalog. It is shown with a "not in loaded catalog" note. FR-1.2 stays as it is for codes typed into the profile.
+
+B) It doesn't count. Only codes in the loaded catalog can be checked off. Others are shown read-only with an explanation, and the verdict stays Not met.
+
+C) Other (please describe after [Answer]: tag below)
+
+[Answer]: 
+
+## Question C3
+`docs/technical-environment.md` differs from the approved `requirements.md` in these points:
+- the model runtime is Ollama only, not "Ollama or LM Studio" (requirements section 2)
+- the team machines are macOS and Windows only, not Linux (NFR-6.1)
+- GitHub Actions CI with `pip-audit` and Dependabot exists, whereas requirements say "No CI pipeline" (section 10, SECURITY-13)
+- it adds specific values: 3 LLM retries, 60-second LLM timeout, 10-second Class Roster timeout, 10 chat requests per minute per session, a 60-minute session idle timeout, and the input limits
+
+Which document wins?
+
+A) The technical environment document wins. Update `requirements.md` to match, with a change note citing this question.
+
+B) The requirements win. The technical environment owner updates `docs/technical-environment.md`.
+
+C) Other (please describe after [Answer]: tag below)
+
+[Answer]: 
+
+---
+
+## Design decisions taken without a question
+These follow directly from the answers and the technical environment document. They are listed so the team can object at the stage gate:
+- **Agent tools stay read-only (LLM06).** Answer B3:A listed `update_profile` and `propose_plan_change`. Following B4:A, both become proposal tools (`propose_profile_change`, `propose_plan_change`). They return a structured change, and deterministic service code applies it after validation. No tool writes state.
+- **"Met (student-confirmed)" (A4:A) keeps the three statuses.** The verdict status stays Met, Not met, or Needs review (as in the technical environment's evaluator example). A `student_confirmed` flag and reason mark a Met that rests on the student's checklist, and the UI shows the label "Met (student-confirmed)". The 40 evaluation cases and the existing property-based invariants stay valid.
+- **Ranking is deterministic and lives in `planner`.** The B2:C node list has no ranking step. Ranking uses skill coverage from search hits plus reachability from `prereq` (FR-4.3), so it goes in `planner`, which may import `prereq` and `catalog`, and is run by a graph node.
+- **Ingestion-time LLM parsing.** The LLM call lives in `agent` (B9). The automated checks on each parse (FR-5.3) live in `prereq`, which never imports `agent`. `scripts/ingest_roster.py` connects the two.
+
+---
+
 ## Execution Checklist (Generation)
 These steps run only after every answer is in, ambiguities are resolved, and the team approves. Each box is marked [x] as soon as its step is done.
 
 ### Change request CR-1
-- [ ] 1. Add FR-1.9 and FR-5.11 to `requirements.md` (and adjust FR-5.5 and FR-5.7 if Question A4 needs it), with a change note citing CR-1
+- [ ] 1. Add FR-1.9 and FR-5.11 to `requirements.md` (and adjust FR-5.5 and FR-5.7 if Question A4 needs it), with a change note citing CR-1. Apply the C3 decision to `requirements.md` or record it for the technical environment owner.
 - [ ] 2. Add story US-1.4 to `stories.md`, add criteria to US-5.1 and US-5.2, and update the persona map and coverage table
 
 ### Design artifacts
